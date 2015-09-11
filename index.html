@@ -59,9 +59,9 @@
 
 //Customiziation area
 //Image for when user is not currentSpeaker
-var userOff = "images/user-512.png";
+var userOff = "images/man.png";
 //Image for when user is currentSpeaker
-var userOn = "images/user-512-t.png";
+var userOn = "images/man_talk.png";
 //Size of images
 var iconSize = "100";
 //File to pull json data from
@@ -75,7 +75,7 @@ var lastHeader = "Last One!";
 //Subheader of webpage when finished
 var resetHeader = "Scrum Over!";
 //background color of webpage
-var backgroundColor = "LightGray";
+var backgroundColor = "gray";
 //text color of webpage
 var textColor = "white";
 //color of div when currentSpeaker
@@ -121,13 +121,19 @@ $.getJSON(jsonFile, function(data){
   $.each(data, function (k, v){
     daName = v.name;
     daTime = v.y;
-    team.push({name:daName, y:daTime});
+    daIconOn = v.iconOn;
+
+    if (! daIconOn){
+      team.push({name:daName, y:daTime, iconOn:userOff});
+    } else {
+      team.push({name:daName, y:daTime, iconOn:daIconOn});
+    }
     console.log(team)
   });
   //Create the grid of participants
   for (var i = 0; i < team.length; i++) {
     $('#grid').append('<div class="left" id="div' + i + '"><img id="imgdiv'
-    + i + '" src="' + userOff + '" height= ' + iconSize + ' width=' + iconSize + '></br>'
+    + i + '" src="' + team[i].iconOn + '" height= ' + iconSize + ' width=' + iconSize + '></br>'
     + team[i].name + '</br></br><span id="time' + i +'">' + team[i].y + '</span>'
     + '<br/><span id="buttons' + i + '" style="visibility: hidden;">'
     + '<button class="start btn" onclick="startTimer();"><i class="fa fa-play"></i></button>'
