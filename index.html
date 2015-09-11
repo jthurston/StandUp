@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link rel="stylesheet" type="text/css" href="css/whodat.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+
+  <script>
+    $(document).ready(function() {
+      getTeam();
+    });
+  </script>
+</head>
+
+<body>
+
+  <h1 id="header"></h1>
+  <h3 id="subheader"></h2>
+
+  <div class="clearfix">
+
+    <div class="outer-div">
+      <div class="inner-div" id="grid">
+
+      </div>
+    </div>
+  </div>
+
+  <div style="position: relative; margin: 0 auto; overflow: hidden; text-align: center;">
+    <div class="niceButton" id="niceButton" onclick="getOne();">
+      <i class="fa fa-random"></i>
+      Start!</div>
+    <div style="margin: 1em auto; font-size: 40px; font-weight: bold;">
+
+        <div style="margin: auto 1.0em; display: inline-block;">
+          <div id="numberOf"></div>
+        </div>
+        <div style="margin: auto 1.0em; display: inline-block;">
+          <div id="numberReady"></div>
+        </div>
+        <div style="margin: auto 1.0em; display: inline-block;">
+          <div id="numberFinished">0 completed</div>
+        </div>
+
+        <div style="clear: both; height: 0; overflow: hidden;"> </div>
+
+    </div>
+
+    <script src="js/highcharts.js"></script>
+    <script src="js/modules/exporting.js"></script>
+
+    <div id="container" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto; visibility: hidden"></div>
+
+</div>
+</body>
+
+<script>
+
+//Customiziation area
+//Image for when user is not currentSpeaker
+var userOff = "images/user-512.png";
+//Image for when user is currentSpeaker
+var userOn = "images/user-512-t.png";
+//Size of images
+var iconSize = "100";
+//File to pull json data from
+var jsonFile = "data/team.json";
+//Initial header of webpage
+var initialHeader = "Daily Standup Go!";
+//Initial subheader of webpage
+var subHeader = "What did you do yesterday? What are you working on today? Are you blocked?"
+//Subheader of webpage when at the last participant
+var lastHeader = "Last One!";
+//Subheader of webpage when finished
+var resetHeader = "Scrum Over!";
+//background color of webpage
+var backgroundColor = "LightGray";
+//text color of webpage
+var textColor = "white";
+//color of div when currentSpeaker
+var onColor = "CornflowerBlue";
+//max time in minutes
+var maxTime = 59;
+//warning time in minutes
+var warnTime = 49;
+
+//Do not change these
+//var team = [{Name:"Clint", y:0},{Name:"Don", y:0},{Name:"Edwin", y:0},{Name:"Jeff", y:0},{Name:"Ryan": y:0];
+var team = [];
+var selected = [];
+var currentSpeaker;
+var lastClicked = 0;
+var elapsedTme = 0;
+var userTime = 0;
+
+//Set some things
+$('#header').text(initialHeader);
+$('#subheader').text(subHeader);
+$("body").css({"background-color": backgroundColor});
+$("body").css({"color": textColor});
+
+function getTeam(){
+
+  //Sample of getting an object
+  //var data = { Name: 'Bubba', Y: 2 };
+  //var name = data.Name;
+  //var value = data["Y"];
+  //console.log(name + " : " + value);
+
+//Load the JSON file to use
+$.getJSON(jsonFile, function(data){
+
+  $('#numberOf').text(data.length + " participants");
+  $('#numberReady').text(data.length + " ready");
+
+  $.each(data, function (k, v){
+    daName = v.name;
+    daTime = v.y;
+    team.push({name:daName, y:daTime});
+    console.log(team)
+  });
+  //Create the grid of participants
+  for (var i = 0; i < team.length; i++) {
+    $('#grid').append('<div class="left" id="div' + i + '"><img id="imgdiv'
+    + i + '" src="' + userOff + '" height= ' + iconSize + ' width=' + iconSize + '></br>'
+    + team[i].name + '</br></br><span id="time' + i +'">' + team[i].y + '</span>'
+    + '<br/><span id="buttons' + i + '" style="visibility: hidden;">'
+    + '<button class="start btn" onclick="startTimer();"><i class="fa fa-play"></i></button>'
+    + '<button class="pause btn" onclick="pauseTimer();"><i class="fa fa-pause"></i></button>'
+    + '<button class="reset btn" onclick="resetTimer();"><i class="fa fa-refresh"></i></button>'
+    + '</br><button onclick="getOne();">Next Random</button>'
+    + '</span>'
+    + '</div>');
+  }
+
+});
+
+}
+
+  //This changes the button text for selection
+  //AND CHANGES THE ONCLICK FUNCTION
+   function buttonHandle(buttonText, buttonFunction){
+    $('#niceButton').text(buttonText);
+    $("#niceButton").attr("onclick",buttonFunction);
+  }
+
+  //Random picks a member from the team object list
+  function randomize(){
+    teamCount = team.length;
+    whichOne = Math.floor((Math.random() * teamCount));
+    //console.log("Selected " + whichOne)
+  }
+
+  //Reset the app after all speakers have had a turn
+  function reset(){
+    for (var i = 0; i < team.length; i++) {
+      $('#div' + i).css('opacity',1);
+      $('#div' + i).css('box-shadow', '');
+      $('#div' + i).css('background-color', '');
+      $('#imgdiv' + i).attr("src",userOff);
+      $('#time' + i).text("0:0:0");
+      $('#numberFinished').text("0 completed");
+    }
+    //Reset some variables
+    selected = [];
+    lastClicked = 0;
+    currentSpeaker = null;
+
+    $('#container').css('visibility','hidden');
+
+    buttonHandle("Start!", "getOne();")
+    $('#header').text(initialHeader);
+  }
+
+  function timeClicks(){
+    if (!stopwatchInterval) {
+      stopwatchInterval = setInterval(function () {
+        if (!prevTime) {
+          prevTime = Date.now();
+        }
+
+        elapsedTime += Date.now() - prevTime;
+        prevTime = Date.now();
+        //console.log(currentSpeaker + "Current Speaker")
+        updateTime();
+      }, 50);
+    }
+  }
+
+  function getOne(){
+    selectOne();
+    elapsedTime = 0;
+    if (stopwatchInterval) {
+      clearInterval(stopwatchInterval);
+      stopwatchInterval = null;
+    }
+    prevTime = null;
+  }
+
+  function selectOne(){
+    //Check to see if we have had a currentSpeaker and if so
+    //change the image of the last speaker.
+     if(currentSpeaker > -1){
+      $('#imgdiv' + whichOne).attr("src",userOff);
+      $('#div' + whichOne).css('opacity',0.5);
+      $('#buttons' + whichOne).css('visibility','hidden');
+     }
+
+    //console.log("Selecting a Number!");
+    randomize();
+
+    //Check to see if the randomized speaker has already been selected
+    //if so randomize and try again until a new speaker has been selected
+    if (selected.indexOf(Number(whichOne)) > -1) {
+      //console.log("Contains");
+      selectOne();
+    }
+    else
+    {
+      console.log("Does not contain")
+      $('#div' + whichOne).css('opacity',1.0);
+      $('#div' + whichOne).css('box-shadow', '3px 3px 15px #666');
+      $('#div' + whichOne).css('background-color', onColor);
+      $('#div' + whichOne).css('border-radius', '5px');
+      $('#imgdiv' + whichOne).attr("src",userOn);
+      $('#time' + whichOne).text("Start Timer");
+      $('#buttons' + whichOne).css('visibility','visible');
+      buttonHandle("Next","getOne();");
+      currentSpeaker = whichOne;
+      selected.push(Number(whichOne));
+    }
+
+    //console.log (selected);
+    $('#numberReady').text((team.length - selected.length) + " ready");
+    $('#numberFinished').text((selected.length - 1) + " completed");
+
+    if (team.length == selected.length){
+      $('#header').text(lastHeader);
+      buttonHandle("Scrum Over","scrumOver();")
+      return true;
+    }
+  }
+
+  function scrumOver(){
+    if (stopwatchInterval) {
+      clearInterval(stopwatchInterval);
+      stopwatchInterval = null;
+    }
+    prevTime = null;
+    testing();
+    $('#numberFinished').text((selected.length ) + " completed");
+    $('#container').css('visibility','visible');
+    $('#header').text(resetHeader);
+    $('#div' + currentSpeaker).css('border-bottom', 'none');
+    $('#imgdiv' + currentSpeaker).attr("src",userOff);
+    $('#div' + currentSpeaker).css('opacity',0.5);
+    $('#buttons' + currentSpeaker).css('visibility','hidden');
+    buttonHandle("Reset","reset();")
+  }
+
+</script>
+</html>
+<script src="js/timer.js"></script>
+<script src="js/chartMaker.js"></script>

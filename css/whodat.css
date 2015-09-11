@@ -1,0 +1,109 @@
+body {
+  background-color: grey;
+  color: white;
+  font-family: arial;
+}
+h3 {
+  text-align: center;
+}
+h1 {
+  font-size: 30pt;
+  font-weight: bold;
+  text-align: center;
+}
+.name {
+  position: absolute;
+  top:10px;
+}
+
+.btn {
+  -webkit-border-radius: 5;
+  -moz-border-radius: 5;
+  border-radius: 5px;
+  color: #ffffff;
+  background: #657c8c;
+  text-decoration: none;
+}
+
+.btn:hover {
+  background: #3cb0fd;
+  text-decoration: none;
+}
+
+.niceButton {
+  margin: 0 auto;
+  /*border: 2px solid white;*/
+  background-color: black;
+  width: 100px;
+  border-radius: 5px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  cursor: pointer;
+  webkit-user-select: none; /* Chrome/Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+ */
+
+  /* Rules below not implemented in browsers yet */
+  -o-user-select: none;
+  user-select: none;
+
+  -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+
+}
+.image_grid {
+  width: 90%;
+  height: 220;
+  margin: 0 auto;
+  text-align: center;
+}
+.time {
+  font-size: 200pt;
+  font-weight: bold;
+}
+
+.timeButtons {
+  width: 100px;
+height: 100px;
+border-radius: 10px;
+font-size: 20pt;
+color: white;
+}
+
+.left {
+  float: left;
+  padding: 20px;
+  text-align: center;
+  margin: 10px;
+}
+
+.clear {
+  clear: both;
+  height: 0;
+  overflow: hidden;
+}
+
+.outer-div {
+  position: relative;
+  margin: 0 auto;
+  overflow: hidden;
+  text-align: center;
+}
+
+.inner-div {
+  margin: auto 1.0em;
+  display: inline-block;
+}
+
+.clearfix:before,
+.clearfix:after { content: " "; display: table; }
+.clearfix:after { clear: both; }
+.clearfix {
+  zoom: 1;
+  margin: 0px auto;
+
+ }
