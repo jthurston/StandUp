@@ -16,11 +16,11 @@ var updateTime = function () {
   userTime = seconds % 60;
 
   if (seconds >= warnTime){
-    $('#div' + whichOne).css('background-color', 'yellow');
+    $('#div' + whichOne).css('background-color', warnTimeColor);
   }
 
   if (seconds >= maxTime){
-    $('#div' + whichOne).css('background-color', 'red');
+    $('#div' + whichOne).css('background-color', maxTimeColor);
   }
 
   $("#time").text(time);
