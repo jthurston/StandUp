@@ -5,7 +5,7 @@
   <link rel="stylesheet" type="text/css" href="css/whodat.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <script>
     $(document).ready(function() {
       getTeam();
@@ -81,11 +81,11 @@ var textColor = "white";
 //color of div when currentSpeaker
 var onColor = "CornflowerBlue";
 //max time in minutes
-var maxTime = 20;
+var maxTime = 2;
 //max time color
 var maxTimeColor = '#CC0000';
 //warning time in minutes
-var warnTime = 10;
+var warnTime = 1;
 //warn time color
 var warnTimeColor = '#FFCC00';
 
@@ -122,11 +122,12 @@ $.getJSON(jsonFile, function(data){
     daName = v.name;
     daTime = v.y;
     daIconOn = v.iconOn;
+    daIconOff = v.iconOff;
 
     if (! daIconOn){
-      team.push({name:daName, y:daTime, iconOn:userOff});
+      team.push({name:daName, y:daTime, iconOn:userOff, iconOff:userOn});
     } else {
-      team.push({name:daName, y:daTime, iconOn:daIconOn});
+      team.push({name:daName, y:daTime, iconOn:daIconOn, iconOff:daIconOff});
     }
     console.log(team)
   });
@@ -168,8 +169,8 @@ $.getJSON(jsonFile, function(data){
       $('#div' + i).css('opacity',1);
       $('#div' + i).css('box-shadow', '');
       $('#div' + i).css('background-color', '');
-      $('#imgdiv' + i).attr("src",userOff);
-      $('#time' + i).text("0:0:0");
+      $('#imgdiv' + i).attr("src",team[i].iconOn);
+      $('#time' + i).text("0");
       $('#numberFinished').text("0 completed");
     }
     //Reset some variables
@@ -212,7 +213,7 @@ $.getJSON(jsonFile, function(data){
     //Check to see if we have had a currentSpeaker and if so
     //change the image of the last speaker.
      if(currentSpeaker > -1){
-      $('#imgdiv' + whichOne).attr("src",userOff);
+      $('#imgdiv' + whichOne).attr("src",team[whichOne].iconOn);
       $('#div' + whichOne).css('opacity',0.5);
       $('#buttons' + whichOne).css('visibility','hidden');
      }
@@ -233,7 +234,7 @@ $.getJSON(jsonFile, function(data){
       $('#div' + whichOne).css('box-shadow', '3px 3px 15px #666');
       $('#div' + whichOne).css('background-color', onColor);
       $('#div' + whichOne).css('border-radius', '5px');
-      $('#imgdiv' + whichOne).attr("src",userOn);
+      $('#imgdiv' + whichOne).attr("src",team[whichOne].iconOff);
       $('#time' + whichOne).text("Start Timer");
       $('#buttons' + whichOne).css('visibility','visible');
       buttonHandle("Next","getOne();");
@@ -263,7 +264,7 @@ $.getJSON(jsonFile, function(data){
     $('#container').css('visibility','visible');
     $('#header').text(resetHeader);
     $('#div' + currentSpeaker).css('border-bottom', 'none');
-    $('#imgdiv' + currentSpeaker).attr("src",userOff);
+    $('#imgdiv' + currentSpeaker).attr("src",team[currentSpeaker].iconOff);
     $('#div' + currentSpeaker).css('opacity',0.5);
     $('#buttons' + currentSpeaker).css('visibility','hidden');
     buttonHandle("Reset","reset();")

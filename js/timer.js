@@ -1,5 +1,7 @@
+//set time holders
 var prevTime, stopwatchInterval, elapsedTime = 0;
 
+//calculate times
 var updateTime = function () {
   var tempTime = elapsedTime;
   var milliseconds = tempTime % 1000;
@@ -12,14 +14,13 @@ var updateTime = function () {
 
   //Make a string of time to display
   var time = hours + ":" + minutes + ":" + seconds + "." + milliseconds;
-  //var time = hours + ":" + minutes + ":" + seconds
   userTime = seconds % 60;
 
-  if (seconds >= warnTime){
+  if (minutes >= warnTime){
     $('#div' + whichOne).css('background-color', warnTimeColor);
   }
 
-  if (seconds >= maxTime){
+  if (minutes >= maxTime){
     $('#div' + whichOne).css('background-color', maxTimeColor);
   }
 

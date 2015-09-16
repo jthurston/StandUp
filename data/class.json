@@ -1,77 +1,77 @@
 [
   {
-    "name": "Marcia","y":0
+    "name": "Marcia","y":0,"iconOn":"images/woman.png","iconOff":"images/woman_talk.png"
   },
   {
-    "name": "Nadia","y":0
+    "name": "Nadia","y":0,"iconOn":"images/woman.png","iconOff":"images/woman_talk.png"
   },
   {
-    "name": "Noel","y":0
+    "name": "Noel","y":0,"iconOn":"images/woman.png","iconOff":"images/woman_talk.png"
   },
   {
-    "name": "Guthrie","y":0
+    "name": "Guthrie","y":0,"iconOn":"images/man.png","iconOff":"images/man_talk.png"
   },
   {
-    "name": "Rodriguez","y":0
+    "name": "Rodriguez","y":0, "iconOn":"images/man.png","iconOff":"images/man_talk.png"
   },
   {
-    "name": "Lara","y":0
+    "name": "Lara","y":0,"iconOn":"images/woman.png","iconOff":"images/woman_talk.png"
   },
   {
-    "name": "Bryan","y":0
+    "name": "Bryan","y":0, "iconOn":"images/man.png","iconOff":"images/man_talk.png"
   },
   {
-    "name": "Marian","y":0
+    "name": "Marian","y":0,"iconOn":"images/woman.png","iconOff":"images/woman_talk.png"
   },
   {
-    "name": "Reeves","y":0
+    "name": "Reeves","y":0, "iconOn":"images/man.png","iconOff":"images/man_talk.png"
   },
   {
-    "name": "Acosta","y":0
+    "name": "Acosta","y":0, "iconOn":"images/man.png","iconOff":"images/man_talk.png"
   },
   {
-    "name": "Joanna","y":0
+    "name": "Joanna","y":0,"iconOn":"images/woman.png","iconOff":"images/woman_talk.png"
   },
   {
-    "name": "Joan","y":0
+    "name": "Joan","y":0,"iconOn":"images/woman.png","iconOff":"images/woman_talk.png"
   },
   {
-    "name": "Janet","y":0
+    "name": "Janet","y":0,"iconOn":"images/woman.png","iconOff":"images/woman_talk.png"
   },
   {
-    "name": "Mcpherson","y":0
+    "name": "Mcpherson","y":0, "iconOn":"images/man.png","iconOff":"images/man_talk.png"
   },
   {
-    "name": "Russell","y":0
+    "name": "Russell","y":0, "iconOn":"images/man.png","iconOff":"images/man_talk.png"
   },
   {
-    "name": "Rachelle","y":0
+    "name": "Rachelle","y":0,"iconOn":"images/woman.png","iconOff":"images/woman_talk.png"
   },
   {
-    "name": "Flora","y":0
+    "name": "Flora","y":0,"iconOn":"images/woman.png","iconOff":"images/woman_talk.png"
   },
   {
-    "name": "Lott","y":0
+    "name": "Lott","y":0, "iconOn":"images/man.png","iconOff":"images/man_talk.png"
   },
   {
-    "name": "Whitney","y":0
+    "name": "Whitney","y":0,"iconOn":"images/woman.png","iconOff":"images/woman_talk.png"
   },
   {
-    "name": "Mandy","y":0
+    "name": "Mandy","y":0,"iconOn":"images/woman.png","iconOff":"images/woman_talk.png"
   },
   {
-    "name": "Cox","y":0
+    "name": "Cox","y":0, "iconOn":"images/man.png","iconOff":"images/man_talk.png"
   },
   {
-    "name": "Hilda","y":0
+    "name": "Hilda","y":0,"iconOn":"images/woman.png","iconOff":"images/woman_talk.png"
   },
   {
-    "name": "Elvia","y":0
+    "name": "Elvia","y":0,"iconOn":"images/woman.png","iconOff":"images/woman_talk.png"
   },
   {
-    "name": "Muriel","y":0
+    "name": "Muriel","y":0,"iconOn":"images/woman.png","iconOff":"images/woman_talk.png"
   },
   {
-    "name": "Gilmore","y":0
+    "name": "Gilmore","y":0, "iconOn":"images/man.png","iconOff":"images/man_talk.png"
   }
 ]

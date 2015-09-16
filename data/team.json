@@ -1,9 +1,9 @@
 
 [
-    {"name":"Clint","y":0,"iconOn":"images/man.png","iconOff":"images/man_talk.png"},
-    {"name":"Don","y":0,"iconOn":"images/man.png","iconOff":"images/man_talk.png"},
-    {"name":"Edwin","y":0,"iconOn":"images/man.png","iconOff":"images/man_talk.png"},
-    {"name":"Jeff","y":0,"iconOn":"images/man.png","iconOff":"images/man_talk.png"},
-    {"name":"Ryan","y":0,"iconOn":"images/man.png","iconOff":"images/man_talk.png"},
-    {"name":"Justin","y":0,"iconOn":"images/man.png","iconOff":"images/man_talk.png"}
+    {"name":"Clint","y":0,"iconOn":"images/clint.jpg","iconOff":"images/clint.jpg"},
+    {"name":"Don","y":0,"iconOn":"images/don.png","iconOff":"images/don.png"},
+    {"name":"Edwin","y":0,"iconOn":"images/正-order.gif","iconOff":"images/正-order.gif"},
+    {"name":"Jeff","y":0,"iconOn":"http://0010-stash.us.saic.com/uploads/user/avatar/21/e8nZC.gif","iconOff":"images/jeff.gif"},
+    {"name":"Ryan","y":0,"iconOn":"images/ryan.png","iconOff":"images/ryan.png"},
+    {"name":"Justin","y":0,"iconOn":"images/justin.jpg","iconOff":"images/justin.jpg"}
 ]
