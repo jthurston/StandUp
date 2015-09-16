@@ -14,7 +14,7 @@ var updateTime = function () {
 
   //Make a string of time to display
   var time = hours + ":" + minutes + ":" + seconds + "." + milliseconds;
-  userTime = seconds % 60;
+  userTime = minutes % 60;
 
   if (minutes >= warnTime){
     $('#div' + whichOne).css('background-color', warnTimeColor);
@@ -24,14 +24,13 @@ var updateTime = function () {
     $('#div' + whichOne).css('background-color', maxTimeColor);
   }
 
-  $("#time").text(time);
-  $('#time' + currentSpeaker).text(time);
+    $('#time' + currentSpeaker).text(time);
 
   //Change time on currentspeaker for graphing
+  //this creates a browser console error but actually works
   team[currentSpeaker]['y'] = userTime;
 };
 
-//$("#startButton").click(function () {
 $('[id^="start"]').click(function () {
 
   if (!stopwatchInterval) {
@@ -47,6 +46,7 @@ $('[id^="start"]').click(function () {
 });
 
 $("#pauseButton").click(function () {
+
 
   if (stopwatchInterval) {
     clearInterval(stopwatchInterval);

@@ -63,7 +63,7 @@ var userOff = "images/man.png";
 //Image for when user is currentSpeaker
 var userOn = "images/man_talk.png";
 //Size of images
-var iconSize = "100";
+var iconSize = "75";
 //File to pull json data from
 var jsonFile = "data/team.json";
 //Initial header of webpage
@@ -80,12 +80,13 @@ var backgroundColor = "gray";
 var textColor = "white";
 //color of div when currentSpeaker
 var onColor = "CornflowerBlue";
+var totalTime = 15; //minutes
 //max time in minutes
-var maxTime = 2;
+var maxTime; //now calculated
 //max time color
 var maxTimeColor = '#CC0000';
 //warning time in minutes
-var warnTime = 1;
+var warnTime; //now calculated
 //warn time color
 var warnTimeColor = '#FFCC00';
 
@@ -95,7 +96,7 @@ var team = [];
 var selected = [];
 var currentSpeaker;
 var lastClicked = 0;
-var elapsedTme = 0;
+var elapsedTime = 0;
 var userTime = 0;
 
 //Set some things
@@ -135,12 +136,12 @@ $.getJSON(jsonFile, function(data){
   for (var i = 0; i < team.length; i++) {
     $('#grid').append('<div class="left" id="div' + i + '"><img id="imgdiv'
     + i + '" src="' + team[i].iconOn + '" height= ' + iconSize + ' width=' + iconSize + '></br>'
-    + team[i].name + '</br></br><span id="time' + i +'">' + team[i].y + '</span>'
+    + team[i].name + '</br></br><span id="time' + i +'">In Que</span>'
     + '<br/><span id="buttons' + i + '" style="visibility: hidden;">'
     + '<button class="start btn" onclick="startTimer();"><i class="fa fa-play"></i></button>'
     + '<button class="pause btn" onclick="pauseTimer();"><i class="fa fa-pause"></i></button>'
     + '<button class="reset btn" onclick="resetTimer();"><i class="fa fa-refresh"></i></button>'
-    + '</br><button onclick="getOne();">Next Random</button>'
+    + '</br><button id="nextButton' + i + '" onclick="getOne();">Next Random</button>'
     + '</span>'
     + '</div>');
   }
@@ -161,27 +162,6 @@ $.getJSON(jsonFile, function(data){
     teamCount = team.length;
     whichOne = Math.floor((Math.random() * teamCount));
     //console.log("Selected " + whichOne)
-  }
-
-  //Reset the app after all speakers have had a turn
-  function reset(){
-    for (var i = 0; i < team.length; i++) {
-      $('#div' + i).css('opacity',1);
-      $('#div' + i).css('box-shadow', '');
-      $('#div' + i).css('background-color', '');
-      $('#imgdiv' + i).attr("src",team[i].iconOn);
-      $('#time' + i).text("0");
-      $('#numberFinished').text("0 completed");
-    }
-    //Reset some variables
-    selected = [];
-    lastClicked = 0;
-    currentSpeaker = null;
-
-    $('#container').css('visibility','hidden');
-
-    buttonHandle("Start!", "getOne();")
-    $('#header').text(initialHeader);
   }
 
   function timeClicks(){
@@ -218,41 +198,50 @@ $.getJSON(jsonFile, function(data){
       $('#buttons' + whichOne).css('visibility','hidden');
      }
 
-    //console.log("Selecting a Number!");
     randomize();
 
     //Check to see if the randomized speaker has already been selected
     //if so randomize and try again until a new speaker has been selected
     if (selected.indexOf(Number(whichOne)) > -1) {
-      //console.log("Contains");
       selectOne();
     }
     else
     {
-      console.log("Does not contain")
       $('#div' + whichOne).css('opacity',1.0);
       $('#div' + whichOne).css('box-shadow', '3px 3px 15px #666');
       $('#div' + whichOne).css('background-color', onColor);
       $('#div' + whichOne).css('border-radius', '5px');
       $('#imgdiv' + whichOne).attr("src",team[whichOne].iconOff);
-      $('#time' + whichOne).text("Start Timer");
+      $('#time' + whichOne).text("Not Timed");
       $('#buttons' + whichOne).css('visibility','visible');
       buttonHandle("Next","getOne();");
       currentSpeaker = whichOne;
       selected.push(Number(whichOne));
     }
 
-    //console.log (selected);
+    //Let's see if this is the last speaker because we have to do some
+    //house cleaning if so.
+    checkLast();
+
+    //This is what changes/updates the ready and completed displays.
     $('#numberReady').text((team.length - selected.length) + " ready");
     $('#numberFinished').text((selected.length - 1) + " completed");
+  }
 
-    if (team.length == selected.length){
+  //MARK: This checks to see if this is the last speaker, if change some things
+  function checkLast(){
+    //alert("Team length " + team.length);
+    //alert("Selected length " + selected.length);
+    if (selected.length >= team.length){
       $('#header').text(lastHeader);
-      buttonHandle("Scrum Over","scrumOver();")
+      buttonHandle("Scrum Over","scrumOver();");
+      $('#nextButton' + whichOne).text("Finish");
+      $('#nextButton' + whichOne).attr("onclick","scrumOver()");
       return true;
     }
   }
 
+  //MARK: This is scrum over mode, so some clean up is done.
   function scrumOver(){
     if (stopwatchInterval) {
       clearInterval(stopwatchInterval);
@@ -270,7 +259,31 @@ $.getJSON(jsonFile, function(data){
     buttonHandle("Reset","reset();")
   }
 
+  //MARK: Reset the app after all speakers have had a turn
+  function reset(){
+    for (var i = 0; i < team.length; i++) {
+      $('#div' + i).css('opacity',1);
+      $('#div' + i).css('box-shadow', '');
+      $('#div' + i).css('background-color', '');
+      $('#imgdiv' + i).attr("src",team[i].iconOn);
+      $('#time' + i).text("In Que");
+      $('#numberFinished').text("0 completed");
+      $('#nextButton' + whichOne).text("Next Random");
+      $('#nextButton' + whichOne).attr("onclick","getOne()");
+    }
+    //Reset some variables
+    selected.length = 0;
+    lastClicked = 0;
+    currentSpeaker = null;
+
+    $('#container').css('visibility','hidden');
+
+    buttonHandle("Start!", "getOne();")
+    $('#header').text(initialHeader);
+  }
+
 </script>
 </html>
 <script src="js/timer.js"></script>
 <script src="js/chartMaker.js"></script>
+<script src="js/calcMinMax.js"></script>
