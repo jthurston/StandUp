@@ -27,32 +27,37 @@
     </div>
   </div>
 
-  <div style="position: relative; margin: 0 auto; overflow: hidden; text-align: center;">
-    <div class="niceButton" id="niceButton" onclick="getOne();">
-      <i class="fa fa-random"></i>
-      Start!</div>
-    <div style="margin: 1em auto; font-size: 40px; font-weight: bold;">
-
-        <div style="margin: auto 1.0em; display: inline-block;">
-          <div id="numberOf"></div>
-        </div>
-        <div style="margin: auto 1.0em; display: inline-block;">
-          <div id="numberReady"></div>
-        </div>
-        <div style="margin: auto 1.0em; display: inline-block;">
-          <div id="numberFinished">0 completed</div>
-        </div>
-
-        <div style="clear: both; height: 0; overflow: hidden;"> </div>
-
-    </div>
-
     <script src="js/highcharts.js"></script>
     <script src="js/modules/exporting.js"></script>
 
     <div id="container" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto; visibility: hidden"></div>
 
 </div>
+
+<!--<div style="position: relative; margin: 0 auto; overflow: hidden; text-align: center;">-->
+  <div id="actions">
+  <div class="niceButton" id="niceButton" onclick="getOne();">
+    <i class="fa fa-random"></i>
+    Start!</div>
+  </div>
+
+  <div id="info">
+      <div style="margin: auto 1.0em; display: inline-block;">
+        <div id="numberOf"></div>
+      </div>
+      <div style="margin: auto 1.0em; display: inline-block;">
+        <div id="numberReady"></div>
+      </div>
+      <div style="margin: auto 1.0em; display: inline-block;">
+        <div id="numberFinished">0 completed</div>
+      </div>
+      <div style="margin: auto 1.0em; display: inline-block;">
+        <div id="totalTime">totalTime</div>
+      </div>
+      <div style="clear: both; height: 0; overflow: hidden;"> </div>
+</div>
+
+
 </body>
 
 <script>
@@ -65,7 +70,7 @@ var userOn = "images/man_talk.png";
 //Size of images
 var iconSize = "75";
 //File to pull json data from
-var jsonFile = "data/team.json";
+var jsonFile = "data/class.json";
 //Initial header of webpage
 var initialHeader = "Daily Standup Go!";
 //Initial subheader of webpage
@@ -79,7 +84,8 @@ var backgroundColor = "#FF8200";
 //text color of webpage
 var textColor = "white";
 //color of div when currentSpeaker
-var onColor = "CornflowerBlue";
+var onColor = "Black";
+//total time allowed for activity
 var totalTime = 15; //minutes
 //max time in minutes
 var maxTime; //now calculated
@@ -89,6 +95,10 @@ var maxTimeColor = '#CC0000';
 var warnTime; //now calculated
 //warn time color
 var warnTimeColor = '#FFCC00';
+//Allow volunteers
+var volunteer = true;
+//Allow skips
+var skip = true;
 
 //Do not change these
 //var team = [{Name:"Clint", y:0},{Name:"Don", y:0},{Name:"Edwin", y:0},{Name:"Jeff", y:0},{Name:"Ryan": y:0];
@@ -98,12 +108,14 @@ var currentSpeaker;
 var lastClicked = 0;
 var elapsedTime = 0;
 var userTime = 0;
+var whichOne;
 
 //Set some things
 $('#header').text(initialHeader);
 $('#subheader').text(subHeader);
 $("body").css({"background-color": backgroundColor});
 $("body").css({"color": textColor});
+$('#totalTime').text(totalTime + " Minutes");
 
 function getTeam(){
 
@@ -137,10 +149,14 @@ $.getJSON(jsonFile, function(data){
     $('#grid').append('<div class="left" id="div' + i + '"><img id="imgdiv'
     + i + '" src="' + team[i].iconOn + '" height= ' + iconSize + ' width=' + iconSize + '></br>'
     + team[i].name + '</br></br><span id="time' + i +'">In Que</span>'
-    + '<br/><span id="buttons' + i + '" style="visibility: hidden;">'
+    + '<br/>'
+    + ( volunteer == true ? '<button id="volunteerButton' + i + '" onclick="selectOne('+i+');">Volunteer</button>'
+    + '<br/>': '' )
+    + '<span id="buttons' + i + '" style="visibility: hidden;">'
     + '<button class="start btn" onclick="startTimer();"><i class="fa fa-play"></i></button>'
     + '<button class="pause btn" onclick="pauseTimer();"><i class="fa fa-pause"></i></button>'
     + '<button class="reset btn" onclick="resetTimer();"><i class="fa fa-refresh"></i></button>'
+    + ( skip == true ? '</br><button id="skipButton' + i + '" onclick="skipMe('+i+');">Skip Me</button>' : '' )
     + '</br><button id="nextButton' + i + '" onclick="getOne();">Next Random</button>'
     + '</span>'
     + '</div>');
@@ -158,7 +174,7 @@ $.getJSON(jsonFile, function(data){
   }
 
   //Random picks a member from the team object list
-  function randomize(){
+  function randomize(daNumber){
     teamCount = team.length;
     whichOne = Math.floor((Math.random() * teamCount));
     //console.log("Selected " + whichOne)
@@ -189,7 +205,15 @@ $.getJSON(jsonFile, function(data){
     prevTime = null;
   }
 
-  function selectOne(){
+  function volunteerOne(selected){
+    console.log(selected);
+  }
+
+  function skipMe(selected){
+    console.log("skipped");
+  }
+
+  function selectOne(chosen){
     //Check to see if we have had a currentSpeaker and if so
     //change the image of the last speaker.
      if(currentSpeaker > -1){
@@ -198,7 +222,11 @@ $.getJSON(jsonFile, function(data){
       $('#buttons' + whichOne).css('visibility','hidden');
      }
 
-    randomize();
+     if (chosen){
+       whichOne = chosen;
+     }else{
+       randomize();
+     }
 
     //Check to see if the randomized speaker has already been selected
     //if so randomize and try again until a new speaker has been selected
@@ -207,6 +235,7 @@ $.getJSON(jsonFile, function(data){
     }
     else
     {
+      $('#volunteerButton' + whichOne).css('visibility','hidden');
       $('#div' + whichOne).css('opacity',1.0);
       $('#div' + whichOne).css('box-shadow', '3px 3px 15px #666');
       $('#div' + whichOne).css('background-color', onColor);
@@ -214,6 +243,7 @@ $.getJSON(jsonFile, function(data){
       $('#imgdiv' + whichOne).attr("src",team[whichOne].iconOff);
       $('#time' + whichOne).text("Not Timed");
       $('#buttons' + whichOne).css('visibility','visible');
+      $('#volunteer' + whichOne).css('visibility','hidden');
       buttonHandle("Next","getOne();");
       currentSpeaker = whichOne;
       selected.push(Number(whichOne));
@@ -257,6 +287,7 @@ $.getJSON(jsonFile, function(data){
     $('#div' + currentSpeaker).css('opacity',0.5);
     $('#buttons' + currentSpeaker).css('visibility','hidden');
     buttonHandle("Reset","reset();")
+    whichOne = undefined;
   }
 
   //MARK: Reset the app after all speakers have had a turn
@@ -268,13 +299,14 @@ $.getJSON(jsonFile, function(data){
       $('#imgdiv' + i).attr("src",team[i].iconOn);
       $('#time' + i).text("In Que");
       $('#numberFinished').text("0 completed");
-      $('#nextButton' + whichOne).text("Next Random");
-      $('#nextButton' + whichOne).attr("onclick","getOne()");
+      $('#nextButton' + i).text("Next Random");
+      $('#nextButton' + i).attr("onclick","getOne()");
+      $('#volunteerButton' + i).css('visibility','visible');
     }
     //Reset some variables
     selected.length = 0;
     lastClicked = 0;
-    currentSpeaker = null;
+    currentSpeaker = undefined;
 
     $('#container').css('visibility','hidden');
 
