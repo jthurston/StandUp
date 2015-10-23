@@ -27,8 +27,9 @@ var updateTime = function () {
     $('#time' + currentSpeaker).text(time);
 
   //Change time on currentspeaker for graphing
-  //this creates a browser console error but actually works
-  team[currentSpeaker]['y'] = userTime;
+  if(currentSpeaker){
+    team[currentSpeaker]['y'] = userTime;
+  };
 };
 
 $('[id^="start"]').click(function () {

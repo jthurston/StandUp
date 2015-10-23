@@ -2,6 +2,7 @@ body {
   background-color: grey;
   color: white;
   font-family: arial;
+  margin: 0px;
 }
 h3 {
   text-align: center;
@@ -76,9 +77,10 @@ color: white;
 
 .left {
   float: left;
-  padding: 20px;
+  padding: 10px;
   text-align: center;
-  margin: 10px;
+  margin: 5px;
+  height: 225px;
 }
 
 .clear {
@@ -107,3 +109,56 @@ color: white;
   margin: 0px auto;
 
  }
+
+ #container { display:none; }
+
+#actions {
+    height: 40px;
+    position: fixed;
+    bottom:0%;
+    width:100%;
+    background-color: #393838;
+    opacity: 1;
+    text-align: center;
+    padding: 15px;
+}
+
+#info {
+    height: 20px;
+    position: fixed;
+    bottom:70px;
+    width:100%;
+    background-color: gray;
+    opacity: 1;
+    text-align: center;
+}
+
+.styled-button-3 {
+	-webkit-box-shadow:rgba(0,0,0,0.0.1) 0 1px 0 0;
+	-moz-box-shadow:rgba(0,0,0,0.0.1) 0 1px 0 0;
+	box-shadow:rgba(0,0,0,0.0.1) 0 1px 0 0;
+	background-color:#5B74A8;
+	border:1px solid #29447E;
+	font-family:'Lucida Grande',Tahoma,Verdana,Arial,sans-serif;
+	font-size:12px;
+	font-weight:700;
+	padding:2px 6px;
+	color:#fff;
+	border-radius:5px;
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
+  width: 100px;
+  cursor: pointer;
+}
+
+input[type="submit"] {
+    font-family: FontAwesome;
+}
+
+.volunteer {
+  position: relative;
+  left: 45px;
+  top: -240px;
+  display: none;
+  overflow: hidden;
+}
