@@ -3,7 +3,8 @@
     {"name":"Clint","y":0,"iconOn":"images/clint.jpg","iconOff":"images/clint.jpg"},
     {"name":"Don","y":0,"iconOn":"images/don.png","iconOff":"images/don.png"},
     {"name":"Edwin","y":0,"iconOn":"images/正-order.gif","iconOff":"images/正-order.gif"},
-    {"name":"Jeff","y":0,"iconOn":"images/jeff.png","iconOff":"images/jeff.png"},
+    {"name":"Jake","y":0,"iconOn":"images/jake.jpg","iconOff":"images/jake.jpg"},
+    {"name":"Jeff","y":0,"iconOn":"images/jeff.jpg","iconOff":"images/jeff.jpg"},
     {"name":"Ryan","y":0,"iconOn":"images/ryan.png","iconOff":"images/ryan.png"},
     {"name":"Justin","y":0,"iconOn":"images/justin.jpg","iconOff":"images/justin.jpg"}
 ]
