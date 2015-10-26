@@ -2,9 +2,12 @@
 <html>
 
 <head>
-  <link rel="stylesheet" type="text/css" href="css/whodat.css">
+
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+  <!--<link rel="stylesheet" type="text/css" href="Skeleton/css/skeleton.css">
+  <link rel="stylesheet" type="text/css" href="Skeleton/css/normalize.css">-->
+  <link rel="stylesheet" type="text/css" href="css/whodat.css">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <script>
     $(document).ready(function() {
@@ -73,11 +76,11 @@ var userOn = "images/man_talk.png";
 //Size of images
 var iconSize = "75";
 //File to pull json data from
-var jsonFile = "data/students.json";
+var jsonFile = "https://standup-thirstyman.rhcloud.com/teams?format=json";
 //Initial header of webpage
 var initialHeader = "Daily Standup Go!";
 //Initial subheader of webpage
-var subHeader = "What did you do yesterday? What are you working on today? Are you blocked?"
+var subHeader = "Yesterday, today and blockers."
 //Subheader of webpage when at the last participant
 var lastHeader = "Last One!";
 //Subheader of webpage when finished
@@ -89,7 +92,7 @@ var textColor = "white";
 //color of div when currentSpeaker
 var onColor = "Black";
 //total time allowed for activity
-var totalTime = 15; //minutes
+var totalTime = 20; //minutes
 //max time in minutes
 var maxTime; //now calculated
 //max time color
