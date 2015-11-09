@@ -17,6 +17,9 @@
 </head>
 
 <body>
+  <div class="admin">
+      <i class="fa fa-cogs pointer" onclick="openSettings()"></i>
+  </div>
 
   <h1 id="header"></h1>
   <h3 id="subheader"></h2>
@@ -25,7 +28,6 @@
 
     <div class="outer-div">
       <div class="inner-div" id="grid">
-
       </div>
     </div>
   </div>
@@ -37,11 +39,23 @@
 
 </div>
 
-<!--<div style="position: relative; margin: 0 auto; overflow: hidden; text-align: center;">-->
   <div id="actions">
   <div class="niceButton" id="niceButton" onclick="getOne();">
     <i class="fa fa-random"></i>
     Start!</div>
+  </div>
+
+  <div id="timeStuff">
+    <div style="margin: auto 1.0em; display: inline-block;">
+      <div id="totalTime">totalTime</div>
+    </div>
+    <div style="margin: auto 1.0em; display: inline-block;">
+      <div id="warnTimed">warnTime</div>
+    </div>
+    <div style="margin: auto 1.0em; display: inline-block;">
+      <div id="maxTimed">maxTime</div>
+    </div>
+    <div style="clear: both; height: 0; overflow: hidden;"> </div>
   </div>
 
   <div id="info">
@@ -54,15 +68,8 @@
       <div style="margin: auto 1.0em; display: inline-block;">
         <div id="numberFinished">0 completed</div>
       </div>
-      <div style="margin: auto 1.0em; display: inline-block;">
-        <div id="totalTime">totalTime</div>
-      </div>
-      <div style="margin: auto 1.0em; display: inline-block;">
-        <div id="maxTimed">?</div>
-      </div>
       <div style="clear: both; height: 0; overflow: hidden;"> </div>
 </div>
-
 
 </body>
 
@@ -86,13 +93,13 @@ var lastHeader = "Last One!";
 //Subheader of webpage when finished
 var resetHeader = "Scrum Over!";
 //background color of webpage
-var backgroundColor = "#FF8200";
+var backgroundColor = "#951924";
 //text color of webpage
 var textColor = "white";
 //color of div when currentSpeaker
 var onColor = "Black";
 //total time allowed for activity
-var totalTime = 20; //minutes
+var totalTime = 15; //minutes
 //max time in minutes
 var maxTime; //now calculated
 //max time color
@@ -124,6 +131,9 @@ $("body").css({"background-color": backgroundColor});
 $("body").css({"color": textColor});
 $('#totalTime').text(totalTime + " Minutes");
 
+function openSettings(){
+    var myWindow = window.open("https://standup-thirstyman.rhcloud.com/teams", "", "width=500, height=300");
+}
 
 function getTeam(){
 
