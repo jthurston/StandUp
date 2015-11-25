@@ -5,8 +5,8 @@
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-  <!--<link rel="stylesheet" type="text/css" href="Skeleton/css/skeleton.css">
-  <link rel="stylesheet" type="text/css" href="Skeleton/css/normalize.css">-->
+  <!---<link rel="stylesheet" type="text/css" href="Skeleton/css/skeleton.css">
+  <link rel="stylesheet" type="text/css" href="Skeleton/css/normalize.css">--->
   <link rel="stylesheet" type="text/css" href="css/whodat.css">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <script>
@@ -23,6 +23,9 @@
 
   <h1 id="header"></h1>
   <h3 id="subheader"></h2>
+
+    <ul class="cbp-rfgrid">
+    </ul>
 
   <div class="clearfix">
 
@@ -84,10 +87,11 @@ var userOn = "images/man_talk.png";
 var iconSize = "75";
 //File to pull json data from
 var jsonFile = "https://standup-thirstyman.rhcloud.com/teams?format=json";
+//var jsonFile = "data/students.json";
 //Initial header of webpage
 var initialHeader = "Daily Standup Go!";
 //Initial subheader of webpage
-var subHeader = "Yesterday, today and blockers."
+var subHeader = "Yesterday, today & blockers."
 //Subheader of webpage when at the last participant
 var lastHeader = "Last One!";
 //Subheader of webpage when finished
@@ -165,7 +169,8 @@ $.getJSON(jsonFile, function(data){
 
   //Create the grid of participants
   for (var i = 0; i < team.length; i++) {
-    $('#grid').append('<div class="left" id="div' + i + '"><img id="imgdiv'
+    $('.cbp-rfgrid').append('<li><div class="left" id="div'
+    + i + '"><img  class="pointer" onclick="selectOne('+i+');" id="imgdiv'
     + i + '" src="' + team[i].iconOn + '" height= ' + iconSize + ' width=' + iconSize + '></br>'
     + team[i].name + '</br></br><span id="time' + i +'">In Que</span>'
     + '<br/>'
@@ -181,7 +186,7 @@ $.getJSON(jsonFile, function(data){
     + '<div class="volunteer" id="volIcon'+i+'"><i class="fa fa-hand-paper-o"></i></div>'
     + '<div class="volunteer" id="ranIcon'+i+'"><i class="fa fa-random"></i></div>'
     + '<div class="volunteer" id="skpIcon'+i+'"><i class="fa fa-fast-forward"></i></div>'
-    + '</div>');
+    + '</div></li>');
   }
 
 });
