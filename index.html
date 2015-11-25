@@ -169,7 +169,8 @@ $.getJSON(jsonFile, function(data){
 
   //Create the grid of participants
   for (var i = 0; i < team.length; i++) {
-    $('.cbp-rfgrid').append('<li><div class="left" id="div' + i + '"><img id="imgdiv'
+    $('.cbp-rfgrid').append('<li><div class="left" id="div'
+    + i + '"><img  class="pointer" onclick="selectOne('+i+');" id="imgdiv'
     + i + '" src="' + team[i].iconOn + '" height= ' + iconSize + ' width=' + iconSize + '></br>'
     + team[i].name + '</br></br><span id="time' + i +'">In Que</span>'
     + '<br/>'
