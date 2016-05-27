@@ -1,0 +1,38 @@
+[
+  {
+    "name": "Cheryl","y":0,"iconOn":"images/woman.png","iconOff":"images/woman_talk.png"
+  },
+  {
+    "name": "Justin","y":0,"iconOn":"images/man.png","iconOff":"images/man_talk.png"
+  },
+  {
+    "name": "Renee","y":0,"iconOn":"images/woman.png","iconOff":"images/woman_talk.png"
+  },
+  {
+    "name": "Mary D","y":0,"iconOn":"images/woman.png","iconOff":"images/woman_talk.png"
+  },
+  {
+    "name": "Hilda","y":0, "iconOn":"images/woman.png","iconOff":"images/woman_talk.png"
+  },
+  {
+    "name": "Austin","y":0,"iconOn":"images/man.png","iconOff":"images/man_talk.png"
+  },
+  {
+    "name": "Sherry","y":0, "iconOn":"images/woman.png","iconOff":"images/woman_talk.png"
+  },
+  {
+    "name": "Paul","y":0, "iconOn":"images/man.png","iconOff":"images/man_talk.png"
+  },
+  {
+    "name": "Jake","y":0, "iconOn":"images/man.png","iconOff":"images/man_talk.png"
+  },
+  {
+    "name": "Jeff","y":0, "iconOn":"images/man.png","iconOff":"images/man_talk.png"
+  },
+  {
+    "name": "Mary V","y":0,"iconOn":"images/woman.png","iconOff":"images/woman_talk.png"
+  },
+  {
+    "name": "Dalene","y":0,"iconOn":"images/woman.png","iconOff":"images/woman_talk.png"
+  }
+]
