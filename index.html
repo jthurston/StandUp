@@ -2,8 +2,6 @@
 <html>
 
 <head>
-
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
   <!---<link rel="stylesheet" type="text/css" href="Skeleton/css/skeleton.css">
   <link rel="stylesheet" type="text/css" href="Skeleton/css/normalize.css">--->
@@ -11,25 +9,29 @@
   <link rel="stylesheet" type="text/css" href="css/hover-min.css">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Standup</title>
-  <script>
-    $(document).ready(function() {
-      getTeam();
-    });
-  </script>
 </head>
 
 <body>
   <div class="admin">
-      <i class="fa fa-cogs pointer" onclick="openSettings()"></i>
+    <i class="fa fa-cogs pointer" onclick="openSettings()"></i>
   </div>
 
   <h1 id="header" class="centerme"></h1>
+
+ <div id="loader" class="centerload" style="visibility: visible">
+<img src="images/hourglass.gif"/><br/>
+<img src="images/sthandup.png"/><br/>
+   Loading Standup...
+ </div>
+
+  <div id="headit" style="visibility: hidden">
   <h3 class="centerme"><span id="p1"></span>  | Day <span id="du"></span> of <span id="td"></span> | <span id="dr"></span> days remaining</h3>
   <h3 id="scrumdates" class="centerme"><span id="sd"></span> |   <span id="ed"></span></h3>
   <h2 id="subheader" class="centerme"></h2>
+  </div>
 
-    <ul class="cbp-rfgrid">
-    </ul>
+  <ul class="cbp-rfgrid">
+  </ul>
 
   <div class="clearfix">
 
@@ -39,17 +41,17 @@
     </div>
   </div>
 
-    <script src="js/highcharts.js"></script>
-    <script src="js/modules/exporting.js"></script>
+  <script src="js/highcharts.js"></script>
+  <script src="js/modules/exporting.js"></script>
 
-    <div id="container" style="min-width: 310px; height: 400px; max-width: 800px; margin: 0 auto;"></div>
+  <div id="container" style="min-width: 310px; height: 400px; max-width: 800px; margin: 0 auto;"></div>
 
-</div>
+  </div>
 
   <div id="actions">
-  <div class="niceButton" id="niceButton" onclick="getOne();">
-    <i class="fa fa-random"></i>
-    Start!</div>
+    <div class="niceButton" id="niceButton" onclick="getOne();">
+      <i class="fa fa-random"></i> Start!
+    </div>
   </div>
 
   <div id="timeStuff">
@@ -66,185 +68,216 @@
   </div>
 
   <div id="info">
-      <div style="margin: auto 1.0em; display: inline-block;">
-        <div id="numberOf"></div>
-      </div>
-      <div style="margin: auto 1.0em; display: inline-block;">
-        <div id="numberReady"></div>
-      </div>
-      <div style="margin: auto 1.0em; display: inline-block;">
-        <div id="numberFinished">0 completed</div>
-      </div>
-      <div style="clear: both; height: 0; overflow: hidden;"> </div>
-</div>
-
-<div id="settings">
-  <b>Settings...</b>
-  <div class="admin">
-    <i class="fa fa-close pointer" onclick="closeSettings()"></i>
+    <div style="margin: auto 1.0em; display: inline-block;">
+      <div id="numberOf"></div>
+    </div>
+    <div style="margin: auto 1.0em; display: inline-block;">
+      <div id="numberReady"></div>
+    </div>
+    <div style="margin: auto 1.0em; display: inline-block;">
+      <div id="numberFinished">0 completed</div>
+    </div>
+    <div style="clear: both; height: 0; overflow: hidden;"> </div>
   </div>
-  <hr/>
-  <form>
-    Start date:
-    <input type="date" name="startdate">
-  <div>End date:</div>
-  <div>Sprint Length:</div>
-  </form>
-  <hr/>
-</div>
+
+  <div id="settings">
+    <b>Settings...</b>
+    <div class="admin">
+      <i class="fa fa-close pointer" onclick="closeSettings()"></i>
+    </div>
+    <hr/>
+    <form>
+      <div>
+        Start date:
+        <span>
+    <input type="date" name="datepicker">
+  </span>
+      </div>
+      <div>
+        End date:
+        <p>
+          <input type="text" id="datepicker">
+        </p>
+      </div>
+      <div>Sprint Length: 15 Business Days</div>
+    </form>
+    <hr/>
+  </div>
 
 </body>
 
+<script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s=" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js" integrity="sha256-eGE6blurk5sHj+rmkfsGYeKyZx3M4bG+ZlFyA7Kns7E=" crossorigin="anonymous"></script>
+
 <script>
-
-//Customiziation area
-//Image for when user is not currentSpeaker
-var userOff = "images/man.png";
-//Image for when user is currentSpeaker
-var userOn = "images/man_talk.png";
-//Size of images
-var iconSize = "75";
-//File to pull json data from
-//var jsonFile = "https://standup-thirstyman.rhcloud.com/teams?format=json";
-var jsonFile = "data/jeffteam.json";
-//Initial header of webpage
-var initialHeader = "Daily Standup Go!";
-//Initial subheader of webpage
-var subHeader = "Yesterday, today & blockers."
-//Subheader of webpage when at the last participant
-var lastHeader = "Last One!";
-//Subheader of webpage when finished
-var resetHeader = "Scrum Over!";
-//background color of webpage
-var backgroundColor = "#951924";
-//text color of webpage
-var textColor = "white";
-//color of div when currentSpeaker
-var onColor = "Black";
-//total time allowed for activity
-var totalTime = 15; //minutes
-//max time in minutes
-var maxTime; //now calculated
-//max time color
-var maxTimeColor = '#CC0000';
-//warning time in minutes
-var warnTime; //now calculated
-//warn time color
-var warnTimeColor = '#FFCC00';
-//Allow volunteers
-var volunteer = true;
-//Allow skips
-var skip = true;
-
-//SCRUM DATES ARE HERE!!! SCRUM DATES ARE HERE!!!
-//get today
-var today = new Date();
-//var today = new Date("Mon Apr 15 12:00:00 GMT 2016")
-//Start date of sprint
-var startdate = new Date("Mon May 31 12:00:00 GMT 2016")
-//End date of sprint
-var enddate = new Date("Fri Jun 17 12:00:00 GMT 2016")
-
-//Do not change these
-//var team = [{Name:"Clint", y:0},{Name:"Don", y:0},{Name:"Edwin", y:0},{Name:"Jeff", y:0},{Name:"Ryan": y:0];
-var team = [];
-var selected = [];
-var currentSpeaker;
-var lastClicked = 0;
-var elapsedTime = 0;
-var userTime = 0;
-var whichOne;
-var chosen;
-
-//Set some things
-$('#header').text(initialHeader);
-$('#subheader').text(subHeader);
-$("body").css({"background-color": backgroundColor});
-$("body").css({"color": textColor});
-$('#totalTime').text(totalTime + " Minutes");
-
-function openSettings(){
-    //var myWindow = window.open("https://standup-thirstyman.rhcloud.com/teams", "", "width=500, height=300");
-    $("#settings").css({'visibility':'visible'});
-}
-
-function closeSettings(){
-    //var myWindow = window.open("https://standup-thirstyman.rhcloud.com/teams", "", "width=500, height=300");
-    $("#settings").css({'visibility':'hidden'});
-}
-
-
-function getTeam(){
-
-  //Sample of getting an object
-  //var data = { Name: 'Bubba', Y: 2 };
-  //var name = data.Name;
-  //var value = data["Y"];
-  //console.log(name + " : " + value);
-
-//Load the JSON file to use
-$.getJSON(jsonFile, function(data){
-
-  $('#numberOf').text(data.length + " participants");
-  $('#numberReady').text(data.length + " ready");
-
-  $.each(data, function (k, v){
-    daName = v.name;
-    daTime = v.y;
-    daIconOn = v.iconOn;
-    daIconOff = v.iconOff;
-
-    if (! daIconOn){
-      team.push({name:daName, y:daTime, iconOn:userOff, iconOff:userOn});
-    } else {
-      team.push({name:daName, y:daTime, iconOn:daIconOn, iconOff:daIconOff});
-    }
-    console.log(team)
+  $(document).ready(function() {
+    getTeam();
   });
 
-  //Create the grid of participants
-  for (var i = 0; i < team.length; i++) {
-    $('.cbp-rfgrid').append('<li><div class="left" id="div'
-    + i + '"><img  class="hvr-grow pointer" onclick="selectOne('+i+');" id="imgdiv'
-    + i + '" src="' + team[i].iconOn + '" height= ' + iconSize + ' width=' + iconSize + '></br>'
-    + team[i].name + '</br></br><span id="time' + i +'">In Queue</span>'
-    + '<br/>'
-    + ( volunteer == true ? '<input type="submit" value="&#xf256; Volunteer" class="styled-button-3" id="volunteerButton' + i + '" onclick="selectOne('+i+');">'
-    + '<br/>' : '' )
-    + '<span id="buttons' + i + '" style="visibility: hidden;">'
-    + '<button class="start btn" onclick="startTimer();"><i class="fa fa-play"></i></button>'
-    + '<button class="pause btn" onclick="pauseTimer();"><i class="fa fa-pause"></i></button>'
-    + '<button class="reset btn" onclick="resetTimer();"><i class="fa fa-refresh"></i></button>'
-    + ( skip == true ? '</br><input type="submit" value="Skip Me" class="styled-button-3" id="skipButton' + i + '" onclick="skipMe('+i+');">' : '' )
-    + '</br><input type="submit" value="Next Random" class="styled-button-3" id="nextButton' + i + '" onclick="getOne();">'
-    + '</span>'
-    + '<div class="volunteer" id="volIcon'+i+'"><i class="fa fa-hand-paper-o"></i></div>'
-    + '<div class="volunteer" id="ranIcon'+i+'"><i class="fa fa-random"></i></div>'
-    + '<div class="volunteer" id="skpIcon'+i+'"><i class="fa fa-fast-forward"></i></div>'
-    + '</div></li>');
+  //Customiziation area
+  //Image for when user is not currentSpeaker
+  var userOff = "images/man.png";
+  //Image for when user is currentSpeaker
+  var userOn = "images/man_talk.png";
+  //Size of images
+  var iconSize = "75";
+  //File to pull json data from
+  //var jsonFile = "https://standup-thirstyman.rhcloud.com/teams?format=json";
+  var jsonFile = "data/jeffteam.json";
+  //Initial header of webpage
+  var initialHeader = "Daily Standup Go!";
+  //Initial subheader of webpage
+  var subHeader = "Yesterday, today & blockers."
+    //Subheader of webpage when at the last participant
+  var lastHeader = "Last One!";
+  //Subheader of webpage when finished
+  var resetHeader = "Scrum Over!";
+  //background color of webpage
+  var backgroundColor = "#007282";
+  //text color of webpage
+  var textColor = "white";
+  //color of div when currentSpeaker
+  var onColor = "Black";
+  //total time allowed for activity
+  var totalTime = 15; //minutes
+  //max time in minutes
+  var maxTime; //now calculated
+  //max time color
+  var maxTimeColor = '#CC0000';
+  //warning time in minutes
+  var warnTime; //now calculated
+  //warn time color
+  var warnTimeColor = '#FFCC00';
+  //Allow volunteers
+  var volunteer = true;
+  //Allow skips
+  var skip = true;
+
+  //SCRUM DATES ARE HERE!!! SCRUM DATES ARE HERE!!!
+  //get today
+  var today = new Date();
+  //var today = new Date("Mon Apr 15 12:00:00 GMT 2016")
+  //Start date of sprint
+  var startdate = new Date("Mon Jul 11 12:00:00 GMT 2016")
+    //End date of sprint
+  var enddate = new Date("Fri Jul 29 12:00:00 GMT 2016")
+
+  //Do not change these
+  //var team = [{Name:"Clint", y:0},{Name:"Don", y:0},{Name:"Edwin", y:0},{Name:"Jeff", y:0},{Name:"Ryan": y:0];
+  var team = [];
+  var selected = [];
+  var currentSpeaker;
+  var lastClicked = 0;
+  var elapsedTime = 0;
+  var userTime = 0;
+  var whichOne;
+  var chosen;
+
+  //Set some things
+  $('#header').text(initialHeader);
+  $('#subheader').text(subHeader);
+  $("body").css({
+    "background-color": backgroundColor
+  });
+  $("body").css({
+    "color": textColor
+  });
+  $('#totalTime').text(totalTime + " Minutes");
+
+  function openSettings() {
+    //var myWindow = window.open("https://standup-thirstyman.rhcloud.com/teams", "", "width=500, height=300");
+    $("#settings").css({
+      'visibility': 'visible'
+    });
   }
 
-});
+  function closeSettings() {
+    //var myWindow = window.open("https://standup-thirstyman.rhcloud.com/teams", "", "width=500, height=300");
+    $("#settings").css({
+      'visibility': 'hidden'
+    });
+  }
 
-}
+  function getTeam() {
+    //Sample of getting an object
+    //var data = { Name: 'Bubba', Y: 2 };
+    //var name = data.Name;
+    //var value = data["Y"];
+    //console.log(name + " : " + value);
+
+    //Load the JSON file to use
+    $.getJSON(jsonFile, function(data) {
+
+      $('#numberOf').text(data.length + " participants");
+      $('#numberReady').text(data.length + " ready");
+
+      $.each(data, function(k, v) {
+        daName = v.name;
+        daTime = v.y;
+        daIconOn = v.iconOn;
+        daIconOff = v.iconOff;
+
+        if (!daIconOn) {
+          team.push({
+            name: daName,
+            y: daTime,
+            iconOn: userOff,
+            iconOff: userOn
+          });
+        } else {
+          team.push({
+            name: daName,
+            y: daTime,
+            iconOn: daIconOn,
+            iconOff: daIconOff
+          });
+        }
+        console.log(team)
+      });
+
+      //Create the grid of participants
+      for (var i = 0; i < team.length; i++) {
+        $('.cbp-rfgrid').append('<li><div class="left" id="div' +
+          i + '"><img  class="hvr-grow pointer" onclick="selectOne(' + i + ');" id="imgdiv' +
+          i + '" src="' + team[i].iconOn + '" height= ' + iconSize + ' width=' + iconSize + '></br>' +
+          team[i].name + '</br></br><span id="time' + i + '">In Queue</span>' +
+          '<br/>' +
+          (volunteer == true ? '<input type="submit" value="&#xf256; Volunteer" class="styled-button-3" id="volunteerButton' + i + '" onclick="selectOne(' + i + ');">' +
+            '<br/>' : '') +
+          '<span id="buttons' + i + '" style="visibility: hidden;">' +
+          '<button class="start btn" onclick="startTimer();"><i class="fa fa-play"></i></button>' +
+          '<button class="pause btn" onclick="pauseTimer();"><i class="fa fa-pause"></i></button>' +
+          '<button class="reset btn" onclick="resetTimer();"><i class="fa fa-refresh"></i></button>' +
+          (skip == true ? '</br><input type="submit" value="Skip Me" class="styled-button-3" id="skipButton' + i + '" onclick="skipMe(' + i + ');">' : '') +
+          '</br><input type="submit" value="Next Random" class="styled-button-3" id="nextButton' + i + '" onclick="getOne();">' +
+          '</span>' +
+          '<div class="volunteer" id="volIcon' + i + '"><i class="fa fa-hand-paper-o"></i></div>' +
+          '<div class="volunteer" id="ranIcon' + i + '"><i class="fa fa-random"></i></div>' +
+          '<div class="volunteer" id="skpIcon' + i + '"><i class="fa fa-fast-forward"></i></div>' +
+          '</div></li>');
+      }
+
+    });
+
+  }
 
   //This changes the button text for selection
   //AND CHANGES THE ONCLICK FUNCTION
-   function buttonHandle(buttonText, buttonFunction){
+  function buttonHandle(buttonText, buttonFunction) {
     $('#niceButton').text(buttonText);
-    $("#niceButton").attr("onclick",buttonFunction);
+    $("#niceButton").attr("onclick", buttonFunction);
   }
 
   //Random picks a member from the team object list
-  function randomize(daNumber){
+  function randomize(daNumber) {
     teamCount = team.length;
     whichOne = Math.floor((Math.random() * teamCount));
     //console.log("Selected " + whichOne)
   }
 
-  function timeClicks(){
+  function timeClicks() {
     if (!stopwatchInterval) {
-      stopwatchInterval = setInterval(function () {
+      stopwatchInterval = setInterval(function() {
         if (!prevTime) {
           prevTime = Date.now();
         }
@@ -257,7 +290,7 @@ $.getJSON(jsonFile, function(data){
     }
   }
 
-  function getOne(){
+  function getOne() {
     selectOne();
     elapsedTime = 0;
     if (stopwatchInterval) {
@@ -267,22 +300,22 @@ $.getJSON(jsonFile, function(data){
     prevTime = null;
   }
 
-  function skipMe(selected){
+  function skipMe(selected) {
     $('#skpIcon' + selected).show();
     $('#ranIcon' + selected).hide();
     $('#volIcon' + selected).hide();
     getOne();
   }
 
-  function selectOne(chosen){
+  function selectOne(chosen) {
     //Check to see if we have had a currentSpeaker and if so
     //change the image of the last speaker.
-    if(currentSpeaker > -1){
-     $('#imgdiv' + whichOne).attr("src",team[whichOne].iconOn);
-     $('#div' + whichOne).css('opacity',0.5);
-     $('#buttons' + whichOne).css('visibility','hidden');
+    if (currentSpeaker > -1) {
+      $('#imgdiv' + whichOne).attr("src", team[whichOne].iconOn);
+      $('#div' + whichOne).css('opacity', 0.5);
+      $('#buttons' + whichOne).css('visibility', 'hidden');
     }
-    if (!chosen && chosen != 0 ){
+    if (!chosen && chosen != 0) {
       randomize();
     } else {
       whichOne = chosen;
@@ -293,22 +326,20 @@ $.getJSON(jsonFile, function(data){
     //if so randomize and try again until a new speaker has been selected
     if (selected.indexOf(Number(whichOne)) > -1) {
       selectOne();
-    }
-    else
-    {
-      if(!chosen && chosen != 0){
+    } else {
+      if (!chosen && chosen != 0) {
         $('#ranIcon' + whichOne).show();
       }
-      $('#volunteerButton' + whichOne).css('visibility','hidden');
-      $('#div' + whichOne).css('opacity',1.0);
+      $('#volunteerButton' + whichOne).css('visibility', 'hidden');
+      $('#div' + whichOne).css('opacity', 1.0);
       $('#div' + whichOne).css('box-shadow', '3px 3px 15px #666');
       $('#div' + whichOne).css('background-color', onColor);
       $('#div' + whichOne).css('border-radius', '5px');
-      $('#imgdiv' + whichOne).attr("src",team[whichOne].iconOff);
+      $('#imgdiv' + whichOne).attr("src", team[whichOne].iconOff);
       $('#time' + whichOne).text("Not Timed");
-      $('#buttons' + whichOne).css('visibility','visible');
-      $('#volunteer' + whichOne).css('visibility','hidden');
-      buttonHandle("Next","getOne();");
+      $('#buttons' + whichOne).css('visibility', 'visible');
+      $('#volunteer' + whichOne).css('visibility', 'hidden');
+      buttonHandle("Next", "getOne();");
       currentSpeaker = whichOne;
       selected.push(Number(whichOne));
     }
@@ -323,50 +354,50 @@ $.getJSON(jsonFile, function(data){
   }
 
   //MARK: This checks to see if this is the last speaker, if change some things
-  function checkLast(){
+  function checkLast() {
     //alert("Team length " + team.length);
     //alert("Selected length " + selected.length);
-    if (selected.length >= team.length){
+    if (selected.length >= team.length) {
       $('#header').text(lastHeader);
-      buttonHandle("Scrum Over","scrumOver();");
-      $('#nextButton' + whichOne).prop("value","Finish");
-      $('#nextButton' + whichOne).attr("onclick","scrumOver()");
+      buttonHandle("Scrum Over", "scrumOver();");
+      $('#nextButton' + whichOne).prop("value", "Finish");
+      $('#nextButton' + whichOne).attr("onclick", "scrumOver()");
       return true;
     }
   }
 
   //MARK: This is scrum over mode, so some clean up is done.
-  function scrumOver(){
+  function scrumOver() {
     if (stopwatchInterval) {
       clearInterval(stopwatchInterval);
       stopwatchInterval = null;
     }
     prevTime = null;
     testing();
-    $('#numberFinished').text((selected.length ) + " completed");
+    $('#numberFinished').text((selected.length) + " completed");
     $('#container').bPopup();
     //$('#container').css('visibility','visible');
     $('#header').text(resetHeader);
     $('#div' + currentSpeaker).css('border-bottom', 'none');
-    $('#imgdiv' + currentSpeaker).attr("src",team[currentSpeaker].iconOff);
-    $('#div' + currentSpeaker).css('opacity',0.5);
-    $('#buttons' + currentSpeaker).css('visibility','hidden');
-    buttonHandle("Reset","reset();")
+    $('#imgdiv' + currentSpeaker).attr("src", team[currentSpeaker].iconOff);
+    $('#div' + currentSpeaker).css('opacity', 0.5);
+    $('#buttons' + currentSpeaker).css('visibility', 'hidden');
+    buttonHandle("Reset", "reset();")
     whichOne = undefined;
   }
 
   //MARK: Reset the app after all speakers have had a turn
-  function reset(){
+  function reset() {
     for (var i = 0; i < team.length; i++) {
-      $('#div' + i).css('opacity',1);
+      $('#div' + i).css('opacity', 1);
       $('#div' + i).css('box-shadow', '');
       $('#div' + i).css('background-color', '');
-      $('#imgdiv' + i).attr("src",team[i].iconOn);
+      $('#imgdiv' + i).attr("src", team[i].iconOn);
       $('#time' + i).text("In Queue");
       $('#numberFinished').text("0 completed");
-      $('#nextButton' + i).prop("value","Next Random");
-      $('#nextButton' + i).attr("onclick","getOne()");
-      $('#volunteerButton' + i).css('visibility','visible');
+      $('#nextButton' + i).prop("value", "Next Random");
+      $('#nextButton' + i).attr("onclick", "getOne()");
+      $('#volunteerButton' + i).css('visibility', 'visible');
       $('#ranIcon' + i).hide();
       $('#volIcon' + i).hide();
       $('#skpIcon' + i).hide();
@@ -376,14 +407,22 @@ $.getJSON(jsonFile, function(data){
     lastClicked = 0;
     currentSpeaker = undefined;
 
-    $('#container').css('display','none');
+    $('#container').css('display', 'none');
     buttonHandle("Start!", "getOne();")
     $('#header').text(initialHeader);
   }
 
+  $(function() {
+    $("#datepicker").datepicker();
+  });
+
+$("#loader").css('display','none');
+$("#headit").css('visibility','visible');
 
 </script>
+
 </html>
+
 <script src="js/timer.js"></script>
 <script src="js/chartMaker.js"></script>
 <script src="js/calcdays.js"></script>
