@@ -4,12 +4,11 @@ body {
   font-family: arial;
   margin: 0 auto;
 }
-h3 {
-  text-align: center;
-}
 h1 {
   font-size: 30pt;
   font-weight: bold;
+}
+.centerme {
   text-align: center;
 }
 .name {
@@ -124,6 +123,16 @@ color: white;
   zoom: 1;
   margin: 0px auto;
 
+ }
+
+ #settings {
+   visibility: hidden;
+   position: absolute;
+   background-color: grey;
+   top: 0px;
+    right: 0px;
+    padding: 5px 5px 0px 5px;
+    margin: 2px;
  }
 
  #container { display:none; }

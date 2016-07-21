@@ -8,6 +8,7 @@
   <!---<link rel="stylesheet" type="text/css" href="Skeleton/css/skeleton.css">
   <link rel="stylesheet" type="text/css" href="Skeleton/css/normalize.css">--->
   <link rel="stylesheet" type="text/css" href="css/whodat.css">
+  <link rel="stylesheet" type="text/css" href="css/hover-min.css">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Standup</title>
   <script>
@@ -22,8 +23,10 @@
       <i class="fa fa-cogs pointer" onclick="openSettings()"></i>
   </div>
 
-  <h1 id="header"></h1>
-  <h3 id="subheader"></h2>
+  <h1 id="header" class="centerme"></h1>
+  <h3 class="centerme"><span id="p1"></span>  | Day <span id="du"></span> of <span id="td"></span> | <span id="dr"></span> days remaining</h3>
+  <h3 id="scrumdates" class="centerme"><span id="sd"></span> |   <span id="ed"></span></h3>
+  <h2 id="subheader" class="centerme"></h2>
 
     <ul class="cbp-rfgrid">
     </ul>
@@ -75,6 +78,21 @@
       <div style="clear: both; height: 0; overflow: hidden;"> </div>
 </div>
 
+<div id="settings">
+  <b>Settings...</b>
+  <div class="admin">
+    <i class="fa fa-close pointer" onclick="closeSettings()"></i>
+  </div>
+  <hr/>
+  <form>
+    Start date:
+    <input type="date" name="startdate">
+  <div>End date:</div>
+  <div>Sprint Length:</div>
+  </form>
+  <hr/>
+</div>
+
 </body>
 
 <script>
@@ -118,6 +136,15 @@ var volunteer = true;
 //Allow skips
 var skip = true;
 
+//SCRUM DATES ARE HERE!!! SCRUM DATES ARE HERE!!!
+//get today
+var today = new Date();
+//var today = new Date("Mon Apr 15 12:00:00 GMT 2016")
+//Start date of sprint
+var startdate = new Date("Mon May 31 12:00:00 GMT 2016")
+//End date of sprint
+var enddate = new Date("Fri Jun 17 12:00:00 GMT 2016")
+
 //Do not change these
 //var team = [{Name:"Clint", y:0},{Name:"Don", y:0},{Name:"Edwin", y:0},{Name:"Jeff", y:0},{Name:"Ryan": y:0];
 var team = [];
@@ -137,8 +164,15 @@ $("body").css({"color": textColor});
 $('#totalTime').text(totalTime + " Minutes");
 
 function openSettings(){
-    var myWindow = window.open("https://standup-thirstyman.rhcloud.com/teams", "", "width=500, height=300");
+    //var myWindow = window.open("https://standup-thirstyman.rhcloud.com/teams", "", "width=500, height=300");
+    $("#settings").css({'visibility':'visible'});
 }
+
+function closeSettings(){
+    //var myWindow = window.open("https://standup-thirstyman.rhcloud.com/teams", "", "width=500, height=300");
+    $("#settings").css({'visibility':'hidden'});
+}
+
 
 function getTeam(){
 
@@ -171,9 +205,9 @@ $.getJSON(jsonFile, function(data){
   //Create the grid of participants
   for (var i = 0; i < team.length; i++) {
     $('.cbp-rfgrid').append('<li><div class="left" id="div'
-    + i + '"><img  class="pointer" onclick="selectOne('+i+');" id="imgdiv'
+    + i + '"><img  class="hvr-grow pointer" onclick="selectOne('+i+');" id="imgdiv'
     + i + '" src="' + team[i].iconOn + '" height= ' + iconSize + ' width=' + iconSize + '></br>'
-    + team[i].name + '</br></br><span id="time' + i +'">In Que</span>'
+    + team[i].name + '</br></br><span id="time' + i +'">In Queue</span>'
     + '<br/>'
     + ( volunteer == true ? '<input type="submit" value="&#xf256; Volunteer" class="styled-button-3" id="volunteerButton' + i + '" onclick="selectOne('+i+');">'
     + '<br/>' : '' )
@@ -328,7 +362,7 @@ $.getJSON(jsonFile, function(data){
       $('#div' + i).css('box-shadow', '');
       $('#div' + i).css('background-color', '');
       $('#imgdiv' + i).attr("src",team[i].iconOn);
-      $('#time' + i).text("In Que");
+      $('#time' + i).text("In Queue");
       $('#numberFinished').text("0 completed");
       $('#nextButton' + i).prop("value","Next Random");
       $('#nextButton' + i).attr("onclick","getOne()");
@@ -347,9 +381,11 @@ $.getJSON(jsonFile, function(data){
     $('#header').text(initialHeader);
   }
 
+
 </script>
 </html>
 <script src="js/timer.js"></script>
 <script src="js/chartMaker.js"></script>
+<script src="js/calcdays.js"></script>
 <script src="js/calcMinMax.js"></script>
 <script src="js/jquery.bpopup.min.js"></script>
