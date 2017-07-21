@@ -1,0 +1,29 @@
+[
+  {
+    "name": "Jeff","y":0,"iconOn":"images/man.png","iconOff":"images/man_talk.png"
+  },
+  {
+    "name": "Lori","y":0,"iconOn":"images/woman.png","iconOff":"images/woman_talk.png"
+  },
+  {
+    "name": "Andrew","y":0,"iconOn":"images/man.png","iconOff":"images/man_talk.png"
+  },
+  {
+    "name": "Ben","y":0, "iconOn":"images/man.png","iconOff":"images/man_talk.png"
+  },
+  {
+    "name": "Jonathan","y":0,"iconOn":"images/man.png","iconOff":"images/man_talk.png"
+  },
+    {
+    "name": "Mike","y":0,"iconOn":"images/man.png","iconOff":"images/man_talk.png"
+  },
+    {
+    "name": "Dillon","y":0,"iconOn":"images/man.png","iconOff":"images/man_talk.png"
+  },
+    {
+    "name": "Larry","y":0,"iconOn":"images/man.png","iconOff":"images/man_talk.png"
+  },
+      {
+    "name": "Kenneth","y":0,"iconOn":"images/man.png","iconOff":"images/man_talk.png"
+  }
+]
