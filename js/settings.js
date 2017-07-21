@@ -7,7 +7,7 @@ var userOn = "images/man_talk.png";
 var iconSize = "75";
 //File to pull json data from
 //var jsonFile = "https://standup-thirstyman.rhcloud.com/teams?format=json";
-var jsonFile = "data/jeffteam.json";
+var jsonFile = "data/eusteam.json";
 //Initial header of webpage
 var initialHeader = "Daily Standup Go!";
 //Initial subheader of webpage
