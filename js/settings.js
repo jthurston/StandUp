@@ -42,9 +42,9 @@ var skip = true;
 var today = new Date();
 //var today = new Date("Mon Apr 15 12:00:00 GMT 2016")
 //Start date of sprint
-var startdate = new Date("Mon Jul 17 12:00:00 GMT 2017")
+var startdate = new Date("Mon Jul 31 12:00:00 GMT 2017")
   //End date of sprint
-var enddate = new Date("Fri July 28 12:00:00 GMT 2017")
+var enddate = new Date("Fri Aug 11 12:00:00 GMT 2017")
 
 //Do not change these
 //var team = [{Name:"Clint", y:0},{Name:"Don", y:0},{Name:"Edwin", y:0},{Name:"Jeff", y:0},{Name:"Ryan": y:0];
