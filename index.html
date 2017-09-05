@@ -3,8 +3,8 @@
 
 <head>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-  <!---<link rel="stylesheet" type="text/css" href="Skeleton/css/skeleton.css">
-  <link rel="stylesheet" type="text/css" href="Skeleton/css/normalize.css">--->
+  <!-- <link rel="stylesheet" type="text/css" href="Skeleton/css/skeleton.css">
+  <link rel="stylesheet" type="text/css" href="Skeleton/css/normalize.css"> -->
   <link rel="stylesheet" type="text/css" href="css/whodat.css">
   <link rel="stylesheet" type="text/css" href="css/hover-min.css">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -18,16 +18,15 @@
 
   <h1 id="header" class="centerme"></h1>
 
- <div id="loader" class="centerload" style="visibility: visible">
-<img src="images/hourglass.gif"/><br/>
-<img src="images/sthandup.png"/><br/>
-   Loading Standup...
- </div>
+  <div id="loader" class="centerload" style="visibility: visible">
+    <img src="images/hourglass.gif" /><br/>
+    <img src="images/sthandup.png" /><br/> Loading Standup...
+  </div>
 
   <div id="headit" style="visibility: hidden">
-  <h3 class="centerme"><span id="p1"></span>  | Day <span id="du"></span> of <span id="td"></span> | <span id="dr"></span> days remaining</h3>
-  <h3 id="scrumdates" class="centerme"><span id="sd"></span> |   <span id="ed"></span></h3>
-  <h2 id="subheader" class="centerme"></h2>
+    <h3 class="centerme"><span id="p1"></span> | Day <span id="du"></span> of <span id="td"></span> | <span id="dr"></span> days remaining</h3>
+    <h3 id="scrumdates" class="centerme"><span id="sd"></span> | <span id="ed"></span></h3>
+    <h2 id="subheader" class="centerme"></h2>
   </div>
 
   <ul class="cbp-rfgrid">
@@ -106,13 +105,15 @@
 
 </body>
 
-<script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s=" crossorigin="anonymous"></script>
-<script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js" integrity="sha256-eGE6blurk5sHj+rmkfsGYeKyZx3M4bG+ZlFyA7Kns7E=" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s="
+  crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js" integrity="sha256-eGE6blurk5sHj+rmkfsGYeKyZx3M4bG+ZlFyA7Kns7E="
+  crossorigin="anonymous"></script>
 
 <script src="js/settings.js"></script>
 
 <script>
-  $(document).ready(function() {
+  $(document).ready(function () {
     getTeam();
   });
 
@@ -149,12 +150,12 @@
     //console.log(name + " : " + value);
 
     //Load the JSON file to use
-    $.getJSON(jsonFile, function(data) {
+    $.getJSON(jsonFile, function (data) {
 
       $('#numberOf').text(data.length + " participants");
       $('#numberReady').text(data.length + " ready");
 
-      $.each(data, function(k, v) {
+      $.each(data, function (k, v) {
         daName = v.name;
         daTime = v.y;
         daIconOn = v.iconOn;
@@ -185,14 +186,18 @@
           i + '" src="' + team[i].iconOn + '" height= ' + iconSize + ' width=' + iconSize + '></br>' +
           team[i].name + '</br></br><span id="time' + i + '">In Queue</span>' +
           '<br/>' +
-          (volunteer == true ? '<input type="submit" value="&#xf256; Volunteer" class="styled-button-3" id="volunteerButton' + i + '" onclick="selectOne(' + i + ');">' +
+          (volunteer == true ?
+            '<input type="submit" value="&#xf256; Volunteer" class="styled-button-3" id="volunteerButton' + i +
+            '" onclick="selectOne(' + i + ');">' +
             '<br/>' : '') +
           '<span id="buttons' + i + '" style="visibility: hidden;">' +
           '<button class="start btn" onclick="startTimer();"><i class="fa fa-play"></i></button>' +
           '<button class="pause btn" onclick="pauseTimer();"><i class="fa fa-pause"></i></button>' +
           '<button class="reset btn" onclick="resetTimer();"><i class="fa fa-refresh"></i></button>' +
-          (skip == true ? '</br><input type="submit" value="Skip Me" class="styled-button-3" id="skipButton' + i + '" onclick="skipMe(' + i + ');">' : '') +
-          '</br><input type="submit" value="Next Random" class="styled-button-3" id="nextButton' + i + '" onclick="getOne();">' +
+          (skip == true ? '</br><input type="submit" value="Skip Me" class="styled-button-3" id="skipButton' + i +
+            '" onclick="skipMe(' + i + ');">' : '') +
+          '</br><input type="submit" value="Next Random" class="styled-button-3" id="nextButton' + i +
+          '" onclick="getOne();">' +
           '</span>' +
           '<div class="volunteer" id="volIcon' + i + '"><i class="fa fa-hand-paper-o"></i></div>' +
           '<div class="volunteer" id="ranIcon' + i + '"><i class="fa fa-random"></i></div>' +
@@ -220,7 +225,7 @@
 
   function timeClicks() {
     if (!stopwatchInterval) {
-      stopwatchInterval = setInterval(function() {
+      stopwatchInterval = setInterval(function () {
         if (!prevTime) {
           prevTime = Date.now();
         }
@@ -355,13 +360,11 @@
     $('#header').text(initialHeader);
   }
 
-  $(function() {
+  $(function () {
     $("#datepicker").datepicker();
   });
-
-$("#loader").css('display','none');
-$("#headit").css('visibility','visible');
-
+  $("#loader").css('display', 'none');
+  $("#headit").css('visibility', 'visible');
 </script>
 
 </html>

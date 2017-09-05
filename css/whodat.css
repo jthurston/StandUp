@@ -57,6 +57,7 @@ h1 {
   margin: 0 auto;
   /*border: 2px solid white;*/
   background-color: black;
+  color: white !important;
   width: 100px;
   border-radius: 5px;
   padding-top: 15px;
@@ -178,6 +179,7 @@ color: white;
   bottom: 70px;
   width:100%;
   background-color: black;
+  color: white !important;
   opacity: 1;
   text-align: center;
   line-height: 22px;
@@ -188,7 +190,8 @@ color: white;
 	-webkit-box-shadow:rgba(0,0,0,0.0.1) 0 1px 0 0;
 	-moz-box-shadow:rgba(0,0,0,0.0.1) 0 1px 0 0;
 	box-shadow:rgba(0,0,0,0.0.1) 0 1px 0 0;
-	background-color:#5B74A8;
+  /*background-color:#5B74A8;*/
+  background-color:black;
 	border:1px solid #29447E;
 	font-family:'Lucida Grande',Tahoma,Verdana,Arial,sans-serif;
 	font-size:12px;
