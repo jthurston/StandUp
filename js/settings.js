@@ -11,13 +11,13 @@ var jsonFile = "data/eusteam.json";
 //Initial header of webpage
 var initialHeader = "Daily Standup Go!";
 //Initial subheader of webpage
-var subHeader = "Yesterday, today & blockers."
+var subHeader = "Yesterday, today & blockers.";
 //Subheader of webpage when at the last participant
 var lastHeader = "Last One!";
 //Subheader of webpage when finished
 var resetHeader = "Scrum Over!";
 //background color of webpage
-var backgroundColor = "light grey";
+var backgroundColor = "tomato";
 //text color of webpage
 var textColor = "black";
 //color of div when currentSpeaker
@@ -42,9 +42,9 @@ var skip = true;
 var today = new Date();
 //var today = new Date("Mon Apr 15 12:00:00 GMT 2016")
 //Start date of sprint
-var startdate = new Date("Mon Aug 28 12:00:00 GMT 2017")
+var startdate = new Date("Mon Oct 23 12:00:00 GMT 2017");
 //End date of sprint
-var enddate = new Date("Fri Sep 8 12:00:00 GMT 2017")
+var enddate = new Date("Fri Nov 3 12:00:00 GMT 2017");
 
 //Do not change these
 //var team = [{Name:"Clint", y:0},{Name:"Don", y:0},{Name:"Edwin", y:0},{Name:"Jeff", y:0},{Name:"Ryan": y:0];

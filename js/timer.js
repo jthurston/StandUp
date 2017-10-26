@@ -29,7 +29,7 @@ var updateTime = function () {
   //Change time on currentspeaker for graphing
   if(currentSpeaker){
     team[currentSpeaker]['y'] = userTime;
-  };
+  }
 };
 
 $('[id^="start"]').click(function () {

@@ -1,6 +1,6 @@
 function testing(){
 
-console.log("In Chart Maker" + team)
+console.log("In Chart Maker" + team);
 
 var chart = new Highcharts.Chart({
     chart: {

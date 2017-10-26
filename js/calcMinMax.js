@@ -5,4 +5,4 @@ $.getJSON(jsonFile, function(data){
 
   $('#warnTimed').text(warnTime + " Minute Warning");
   $('#maxTimed').text(maxTime + " Minute Stop");
-})
+});
