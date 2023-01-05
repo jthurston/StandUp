@@ -27,13 +27,16 @@
     "name": "Hazma","y":0,"iconOn":"images/man.png","iconOff":"images/man_talk.png"
   },
   {
-    "name": "Lynn","y":0,"iconOn":"images/man.png","iconOff":"images/man_talk.png"
+    "name": "Shabari","y":0,"iconOn":"images/man.png","iconOff":"images/man_talk.png"
   },
       {
     "name": "Tim","y":0,"iconOn":"images/man.png","iconOff":"images/man_talk.png"
   },
   {
-    "name": "Matias","y":0,"iconOn":"images/man.png","iconOff":"images/man_talk.png"
+    "name": "Jesse","y":0,"iconOn":"images/man.png","iconOff":"images/man_talk.png"
+  },
+  {
+    "name": "Jarred","y":0,"iconOn":"images/man.png","iconOff":"images/man_talk.png"
   },
   {
     "name": "Valeria","y":0,"iconOn":"images/man.png","iconOff":"images/man_talk.png"
